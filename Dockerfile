@@ -9,7 +9,11 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    nginx \
+    supervisor \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions yang diperlukan Laravel
 RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
@@ -28,13 +32,14 @@ RUN chown -R www-data:www-data /var/www \
     && chmod -R 755 /var/www
 
 # Install dependensi proyek Laravel
-RUN composer install
+RUN composer install --no-dev --optimize-autoloader
 
-# Salin file konfigurasi nginx
-COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+# Salin file konfigurasi Nginx dan Supervisor
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose port 9000 dan 80
-EXPOSE 9000
-EXPOSE 80
+# Expose port 80 untuk Nginx dan port 9000 untuk PHP-FPM
+EXPOSE 80 9000
 
-CMD ["php-fpm"]
+# CMD untuk memulai Supervisor
+CMD ["/usr/bin/supervisord"]

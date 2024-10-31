@@ -11,16 +11,18 @@ services:
       - .:/var/www
     networks:
       - laravel
+    ports:
+      - "9000:9000"  # Tambahkan port untuk PHP-FPM
 
   webserver:
     image: nginx:alpine
     container_name: nginx
     restart: unless-stopped
     ports:
-      - "8081:80"
+      - "8000:80"  # Expose port 80 dari Nginx ke 8000 di host
     volumes:
       - .:/var/www
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf  # Pastikan path benar
     networks:
       - laravel
     depends_on:
@@ -31,10 +33,10 @@ services:
     container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD:   # Anda bisa sesuaikan
+      MYSQL_ROOT_PASSWORD: angga
       MYSQL_DATABASE: thrift
       MYSQL_USER: root
-      MYSQL_PASSWORD:
+      MYSQL_PASSWORD: angga
     volumes:
       - dbdata:/var/lib/mysql
     networks:
