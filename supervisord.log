@@ -137,3 +137,70 @@
 2024-10-31 16:41:00,250 INFO spawned: 'nginx' with pid 13
 2024-10-31 16:41:00,255 WARN exited: nginx (exit status 1; not expected)
 2024-10-31 16:41:01,257 INFO gave up: nginx entered FATAL state, too many start retries too quickly
+2024-10-31 17:16:11,289 WARN received SIGQUIT indicating exit request
+2024-10-31 17:16:11,291 INFO waiting for php-fpm to die
+2024-10-31 17:16:11,298 INFO stopped: php-fpm (exit status 0)
+2024-10-31 17:16:22,692 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-10-31 17:16:22,697 INFO supervisord started with pid 1
+2024-10-31 17:16:23,701 INFO spawned: 'nginx' with pid 8
+2024-10-31 17:16:23,703 INFO spawned: 'php-fpm' with pid 9
+2024-10-31 17:16:23,705 WARN exited: nginx (exit status 1; not expected)
+2024-10-31 17:16:24,723 INFO spawned: 'nginx' with pid 12
+2024-10-31 17:16:24,724 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-10-31 17:16:24,728 WARN exited: nginx (exit status 1; not expected)
+2024-10-31 17:16:26,733 INFO spawned: 'nginx' with pid 13
+2024-10-31 17:16:26,743 WARN exited: nginx (exit status 1; not expected)
+2024-10-31 17:16:29,748 INFO spawned: 'nginx' with pid 14
+2024-10-31 17:16:29,753 WARN exited: nginx (exit status 1; not expected)
+2024-10-31 17:16:30,754 INFO gave up: nginx entered FATAL state, too many start retries too quickly
+2024-10-31 17:17:50,259 WARN received SIGQUIT indicating exit request
+2024-10-31 17:17:50,260 INFO waiting for php-fpm to die
+2024-10-31 17:17:50,266 INFO stopped: php-fpm (exit status 0)
+2024-11-01 03:57:15,980 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-11-01 03:57:15,985 INFO supervisord started with pid 1
+2024-11-01 03:57:17,001 INFO spawned: 'nginx' with pid 7
+2024-11-01 03:57:17,003 INFO spawned: 'php-fpm' with pid 8
+2024-11-01 03:57:17,011 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 03:57:18,084 INFO spawned: 'nginx' with pid 11
+2024-11-01 03:57:18,085 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-01 03:57:18,089 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 03:57:20,095 INFO spawned: 'nginx' with pid 12
+2024-11-01 03:57:20,106 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 03:57:23,113 INFO spawned: 'nginx' with pid 13
+2024-11-01 03:57:23,121 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 03:57:24,123 INFO gave up: nginx entered FATAL state, too many start retries too quickly
+2024-11-01 04:08:03,292 WARN received SIGQUIT indicating exit request
+2024-11-01 04:08:03,293 INFO waiting for php-fpm to die
+2024-11-01 04:08:04,318 INFO stopped: php-fpm (exit status 0)
+2024-11-01 09:53:00,415 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-11-01 09:53:00,449 INFO supervisord started with pid 1
+2024-11-01 09:53:01,453 INFO spawned: 'nginx' with pid 7
+2024-11-01 09:53:01,455 INFO spawned: 'php-fpm' with pid 8
+2024-11-01 09:53:01,463 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 09:53:02,537 INFO spawned: 'nginx' with pid 11
+2024-11-01 09:53:02,541 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-01 09:53:02,544 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 09:53:04,549 INFO spawned: 'nginx' with pid 12
+2024-11-01 09:53:04,553 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 09:53:07,559 INFO spawned: 'nginx' with pid 13
+2024-11-01 09:53:07,566 WARN exited: nginx (exit status 1; not expected)
+2024-11-01 09:53:08,567 INFO gave up: nginx entered FATAL state, too many start retries too quickly
+2024-11-01 10:18:07,679 WARN received SIGQUIT indicating exit request
+2024-11-01 10:18:07,680 INFO waiting for php-fpm to die
+2024-11-01 10:18:07,693 INFO stopped: php-fpm (exit status 0)
+2024-11-12 00:37:49,224 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-11-12 00:37:49,269 INFO supervisord started with pid 1
+2024-11-12 00:37:50,288 INFO spawned: 'nginx' with pid 7
+2024-11-12 00:37:50,291 INFO spawned: 'php-fpm' with pid 8
+2024-11-12 00:37:50,301 WARN exited: nginx (exit status 1; not expected)
+2024-11-12 00:37:51,409 INFO spawned: 'nginx' with pid 11
+2024-11-12 00:37:51,410 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-12 00:37:51,416 WARN exited: nginx (exit status 1; not expected)
+2024-11-12 00:37:53,422 INFO spawned: 'nginx' with pid 12
+2024-11-12 00:37:53,427 WARN exited: nginx (exit status 1; not expected)
+2024-11-12 00:37:56,433 INFO spawned: 'nginx' with pid 13
+2024-11-12 00:37:56,437 WARN exited: nginx (exit status 1; not expected)
+2024-11-12 00:37:57,438 INFO gave up: nginx entered FATAL state, too many start retries too quickly
+2024-11-12 00:45:53,342 WARN received SIGQUIT indicating exit request
+2024-11-12 00:45:53,343 INFO waiting for php-fpm to die
+2024-11-12 00:45:53,367 INFO stopped: php-fpm (exit status 0)
