@@ -3,11 +3,19 @@
 @section('content')
     <div class="card rounded-full">
         <div class="card-header bg-transparent d-flex justify-content-between">
-            <button class="btn btn-info" id="addData">
-                <i class="fa fa-plus">
-                    <span>Tambah Product</span>
-                </i>
-            </button>
+            <div>
+                <button class="btn btn-info" id="addData">
+                    <i class="fa fa-plus">
+                        <span>Tambah Product</span>
+                    </i>
+                </button>
+                <a href="{{ route('export.excel') }}" class="btn btn-success">
+                    <i class="fa fa-file-excel"></i> Export Excel
+                </a>
+                <a href="{{ route('export.pdf') }}" class="btn btn-danger">
+                    <i class="fa fa-file-pdf"></i> Export PDF
+                </a>
+            </div>
             <input type="text" wire:model="search" class="form-control w-25" placeholder="Search....">
         </div>
         <div class="card-body">

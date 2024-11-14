@@ -22,17 +22,82 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            display: flex;
+            width: 70%;
+            height: 70%;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .image-section {
+            flex: 1;
+            background: url('/assets/images/login_image.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .form-section h1 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .form-section .form-control {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .form-section .btn {
+            background-color: #ffc107;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 5px;
+        }
+
+        .form-section .btn:hover {
+            background-color: #e0a800;
+        }
+
+        .form-section .forgot-password {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .form-section label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+    </style>
     @stack('style')
     <title>Toko Online | {{ $title }}</title>
 </head>
 
 <body>
-
-    <main class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <div class="card p-4 m-auto" style="width: 30vw;">
-            <div class="card-header bg-transparent text-center">
-                <h5>{{ $name }}</h5>
-            </div>
+    <div class="login-container">
+        <div class="image-section"></div>
+        <div class="form-section">
+            <h1>Hello, Welcome!</h1>
             <form action="{{ route('loginProses') }}" method="POST">
                 @csrf
                 @if (session('error'))
@@ -40,28 +105,20 @@
                         <b>Oppss...!</b> {{ session('error') }}
                     </div>
                 @endif
-                <div class="card-body">
-                    <div class="mb-3 row">
-                        <label for="email" class="col-sm-5 col-form-label">Email</label>
-                        <div class="col-sm-7">
-                            <input type="email" class="p-2 form-control-plaintext" id="email" name="email"
-                                value="" autocomplete="off" autofocus>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="password" class="col-sm-5 col-form-label">Password</label>
-                        <div class="col-sm-7">
-                            <input type="password" class="form-control" id="password" name="password">
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-                <div class="card-footer bg-transparent">
-                    <button type="submit" class="btn btn-success w-100 mt-2">Login Now</button>
-                    <button type="submit" class="btn btn-danger w-100 mt-2">Lupa Password</button>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                <div class="form-check mb-3">
+                </div>
+                <button type="submit" class="btn btn-warning w-100">Login</button>
             </form>
         </div>
-    </main>
+    </div>
 
     @include('sweetalert::alert')
 </body>

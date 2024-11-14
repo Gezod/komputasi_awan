@@ -19,7 +19,7 @@ services:
   webserver:
     image: nginx:alpine
     container_name: nginx
-    restart: unless-stopped 
+    restart: unless-stopped
     ports:
       - "8000:80"  # Expose port 80 dari Nginx ke 8000 di host
     volumes:
@@ -44,7 +44,7 @@ services:
     networks:
       - laravel
     ports:
-      - "3306:3306"
+      - "3307:3307"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s

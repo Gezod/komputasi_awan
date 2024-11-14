@@ -5,6 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransaksiAdminController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ExportTransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,4 +61,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::DELETE('/admin/deleteData/{id}', [ProductController::class, 'destroy'])->name('deleteData');
 
     Route::GET('/admin/transaksi', [TransaksiAdminController::class, 'index'])->name('transaksi.admin');
+
+    Route::get('export-excel', [ExportController::class, 'exportExcel'])->name('export.excel');
+    Route::get('export-pdf', [ExportController::class, 'exportPDF'])->name('export.pdf');
+
+    Route::get('export-transactions-excel', [ExportTransactionController::class, 'exportExcel'])->name('export.transactions.excel');
+    Route::get('export-transactions-pdf', [ExportTransactionController::class, 'exportPDF'])->name('export.transactions.pdf');
 });
