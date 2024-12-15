@@ -5,8 +5,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransaksiAdminController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ExportController;
-use App\Http\Controllers\ExportTransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +34,8 @@ Route::POST('/checkout/prosesPembayaran', [Controller::class, 'prosesPembayaran'
 Route::get('/checkOut', [Controller::class, 'keranjang'])->name('keranjang');
 Route::get('/checkOut/{id}', [Controller::class, 'bayar'])->name('keranjang.bayar');
 
+// Route::DELETE('/deleteCheckout/{id}',[Controller::class,'DeleteChart'])->name('deleteChart');
+
 
 Route::get('/admin', [Controller::class, 'login'])->name('login');
 Route::POST('/admin/loginProses', [Controller::class, 'loginProses'])->name('loginProses');
@@ -61,10 +61,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::DELETE('/admin/deleteData/{id}', [ProductController::class, 'destroy'])->name('deleteData');
 
     Route::GET('/admin/transaksi', [TransaksiAdminController::class, 'index'])->name('transaksi.admin');
+    Route::patch('/transactions/{id}/status', [Controller::class, 'updateStatus'])->name('admin.update-status');
 
-    Route::get('export-excel', [ExportController::class, 'exportExcel'])->name('export.excel');
-    Route::get('export-pdf', [ExportController::class, 'exportPDF'])->name('export.pdf');
-
-    Route::get('export-transactions-excel', [ExportTransactionController::class, 'exportExcel'])->name('export.transactions.excel');
-    Route::get('export-transactions-pdf', [ExportTransactionController::class, 'exportPDF'])->name('export.transactions.pdf');
 });

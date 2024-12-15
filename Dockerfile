@@ -28,12 +28,14 @@ WORKDIR /var/www
 COPY . .
 
 # Beri permission
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 755 /var/www
 
 # Install dependensi proyek Laravel
 RUN composer install --no-dev --optimize-autoloader
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 # Salin file konfigurasi Nginx dan Supervisor
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf

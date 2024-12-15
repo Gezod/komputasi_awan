@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Mockery\Undefined;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class Controller extends BaseController
@@ -41,15 +42,27 @@ class Controller extends BaseController
     }
     public function transaksi()
     {
-        $db = tblCart::with('product')->where(['idUser' => 'guest123', 'status' => 0])->get();
-        $countKeranjang = tblCart::where(['idUser' => 'guest123', 'status' => 0])->count();
+        if(Auth::user()){
+            $db = tblCart::with('product')->where(['idUser' => Auth::user()->id, 'status' => 0])->get();
+            $countKeranjang = tblCart::where(['idUser' => Auth::user()->id, 'status' => 0])->count();
 
-        // dd($db->product->nama_product);die;
-        return view('pelanggan.page.transaksi', [
-            'title'     => 'Transaksi',
-            'count'     => $countKeranjang,
-            'data'      => $db
-        ]);
+            $userId = Auth::user()->id;
+            // dd($db->product->nama_product);die;
+            return view('pelanggan.page.transaksi', [
+                'title'     => 'Transaksi',
+                'count'     => $countKeranjang,
+                'data'      => $db,
+                'userId'=> $userId,
+            ]);
+        }else{
+            $best = product::where('quantity_out','>=',5)->get();
+            $data = product::paginate(15);
+
+
+            session()->flash('message', 'Data berhasil disimpan!');
+            return redirect()->back();
+        }
+
     }
     public function contact()
     {
@@ -67,6 +80,7 @@ class Controller extends BaseController
         $codeTransaksi = date('Ymd') . $code + 1;
         $detailBelanja = modelDetailTransaksi::where(['id_transaksi' => $codeTransaksi, 'status' => 0])
             ->sum('price');
+            // dd($co   deTransaksi);
         $jumlahBarang = modelDetailTransaksi::where(['id_transaksi' => $codeTransaksi, 'status' => 0])
             ->count('id_barang');
         $qtyBarang = modelDetailTransaksi::where(['id_transaksi' => $codeTransaksi, 'status' => 0])
@@ -83,31 +97,72 @@ class Controller extends BaseController
     public function prosesCheckout(Request $request, $id)
     {
         $data = $request->all();
-        // $findId = tblCart::where('id',$id)->get();
-        $code = transaksi::count();
-        $codeTransaksi = date('Ymd') . $code + 1;
-        // dd($data);die;
 
-        // simpan detail barang
-        $detailTransaksi = new modelDetailTransaksi();
-        $fieldDetail = [
-            'id_transaksi' => $codeTransaksi,
-            'id_barang'    => $data['idBarang'],
-            'qty'          => $data['qty'],
-            'price'        => $data['total']
-        ];
-        $detailTransaksi::create($fieldDetail);
+        $data['hapusData'] = $data['hapusData'] ?? 'undefined';
 
-        // update cart 
-        $fieldCart = [
-            'qty'          => $data['qty'],
-            'price'        => $data['total'],
-            'status'       => 1,
-        ];
-        tblCart::where('id', $id)->update($fieldCart);
+        if($data['hapusData'] == 'undefined'){
+            // $findId = tblCart::where('id',$id)->get();
+            $code = transaksi::count();
+            $codeTransaksi = date('Ymd') . $code + 1;
+            // dd($data);die;
 
-        Alert::toast('Checkout Berhasil', 'success');
-        return redirect()->route('checkout');
+            // simpan detail barang
+            $detailTransaksi = new modelDetailTransaksi();
+            $fieldDetail = [
+                'id_transaksi' => $codeTransaksi,
+                'id_barang'    => $data['idBarang'],
+                'qty'          => $data['qty'],
+                'price'        => $data['total']
+            ];
+            $detailTransaksi::create($fieldDetail);
+
+            // update cart
+            $fieldCart = [
+                'qty'          => $data['qty'],
+                'price'        => $data['total'],
+                'status'       => 1,
+            ];
+            tblCart::where('id',$id)->update($fieldCart);
+
+            Alert::toast('Checkout Berhasil', 'success');
+            return redirect()->route('checkout');
+        }else{
+            $item = tblCart::find($id);
+
+            // Periksa apakah data ditemukan
+            if (!$item) {
+                Alert::toast('Data tidak ditemukan', 'warning');
+                return redirect()->back();
+            }
+
+            // Hapus data
+            $item->delete();
+
+            // Redirect dengan pesan sukses
+            Alert::toast('Data berhasil dihapus', 'success');
+            return redirect()->back();
+
+        }
+
+    }
+
+    public function DeleteChart($id)
+    {
+        // Cari data berdasarkan ID
+        $item = tblCart::find($id);
+
+        // Periksa apakah data ditemukan
+        if (!$item) {
+            Alert::toast('Data tidak ditemukan', 'warning');
+            return redirect()->back();
+        }
+
+        // Hapus data
+        $item->delete();
+
+        // Redirect dengan pesan sukses
+        Alert::toast('Data berhasil dihapus', 'success');
+        return redirect()->back();
     }
 
     public function prosesPembayaran(Request $request)
@@ -261,4 +316,17 @@ class Controller extends BaseController
         Alert::toast('Kamu berhasil Logout', 'success');
         return redirect('admin');
     }
+    public function updateStatus(Request $request, $id)
+{
+    $transaction = Transaksi::find($id);
+
+    if (!$transaction) {
+        return back()->with('error', 'Transaksi tidak ditemukan');
+    }
+
+    $transaction->status = $request->input('status');
+    $transaction->save();
+
+    return back()->with('success', 'Status transaksi berhasil diperbarui');
+}
 }

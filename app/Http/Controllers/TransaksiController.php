@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\transaksi;
 use App\Http\Requests\StoretransaksiRequest;
@@ -18,9 +19,15 @@ class TransaksiController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()){
+            $countKeranjang = 0;
+
+        }else{
+            $countKeranjang = tblCart::where(['idUser' => Auth::user()->id, 'status' => 0])->count();
+        }
         $best = product::where('quantity_out','>=',5)->get();
         $data = product::paginate(15);
-        $countKeranjang = tblCart::where(['idUser' => 'guest123', 'status' => 0])->count();
+        // $countKeranjang = tblCart::where(['idUser' => 'guest123', 'status' => 0])->count();
         return view('pelanggan.page.home', [
             'title'     => 'Home',
             'data'      => $data,
@@ -34,19 +41,27 @@ class TransaksiController extends Controller
      */
     public function addTocart(Request $request)
     {
-        $idProduct = $request->input('idProduct');
+        if(!Auth::user()){
+            Alert::toast('Login terlebih dahulu !', 'warning');
+            return back();
+        }else{
+            
+            $idProduct = $request->input('idProduct');
 
-        $db = new tblCart ;
-        $product = product::find($idProduct);
-        $field = [
-            'idUser'    => 'guest123',
-            'id_barang' => $idProduct,
-            'qty'       => 1,
-            'price'     => $product->harga,
-        ];
+            $db = new tblCart ;
+            $product = product::find($idProduct);
+            $field = [
+                'idUser'    => Auth::user()->id,
+                'id_barang' => $idProduct,
+                'qty'       => 1,
+                'price'     => $product->harga,
+            ];
 
-        $db::create($field);
-        return redirect('/');
+            $db::create($field);
+            Alert::toast('Berhasil menambahkan ke keranjang!', 'success');
+            return redirect('/');
+        }
+        
     }
 
     /**

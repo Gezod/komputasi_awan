@@ -1,18 +1,19 @@
 @extends('admin.layout.index')
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 @section('content')
     <div class="card rounded-full p-2">
-        <div class="d-flex justify-content-between mb-3">
-            <input type="text" wire:model="search" class="form-control w-25" placeholder="Search....">
-            <div>
-                <a href="{{ route('export.transactions.excel') }}" class="btn btn-success">
-                    <i class="fa fa-file-excel"></i> Export Excel
-                </a>
-                <a href="{{ route('export.transactions.pdf') }}" class="btn btn-danger">
-                    <i class="fa fa-file-pdf"></i> Export PDF
-                </a>
-            </div>
-        </div>
+        <input type="text" wire:model="search" class="form-control w-25" placeholder="Search....">
         <div class="card-body">
             <table class="table table-responsive table-striped">
                 <thead>
@@ -22,7 +23,7 @@
                         <th>Id Transaksi</th>
                         <th>Nama</th>
                         <th>Alamat</th>
-                        <th>Nilai Rp</th>
+                        <th>Nilai Trx</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -34,16 +35,22 @@
                             <td>{{ $item->code_transaksi }}</td>
                             <td>{{ $item->nama_customer }}</td>
                             <td>{{ $item->alamat }}</td>
-                            <td>{{ $item->total_harga }}</td>
+                            <td>{{ number_format($item->total_harga) }}</td>
                             <td>
-                                <span
-                                    class="align-middle {{ $item->status === 'Paid' ? 'badge bg-success text-white' : 'badge bg-danger text-white' }}">
-                                    {{ $item->status }}
-                                </span>
+                                <form action="{{ route('admin.update-status', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <select name="status" onchange="this.form.submit()" class="form-select
+                                        {{ $item->status === 'Paid' ? 'bg-success text-white' : ($item->status === 'Unpaid' ? 'bg-danger text-white' : '') }}">
+                                        <option value="Unpaid" {{ $item->status === 'Unpaid' ? 'selected' : '' }}>Unpaid</option>
+                                        <option value="Paid" {{ $item->status === 'Paid' ? 'selected' : '' }}>Paid</option>
+                                    </select>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
+
             </table>
             <div class="pagination d-flex flex-row justify-content-between">
                 <div class="showData">

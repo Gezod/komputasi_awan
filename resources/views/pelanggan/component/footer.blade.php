@@ -1,34 +1,34 @@
 <div class="d-flex justify-content-between gap-5 pt-4 mt-5">
     <div class="title-left w-25">
         <div class="header-title fs-4 mb-2 font-weight-bolder">
-            AtoZ
+            TOKO ONLINE KITA
         </div>
-        <p>your premier destination for sustainable and stylish thrifting.
-            At AtoZ, we bring together buyers and sellers to celebrate the art of thrifting
-            while promoting eco-friendly fashion choicesss.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus repudiandae optio a illo
+            accusantium deserunt officiis distinctio suscipit ut eveniet, deleniti non aut eaque, ipsum
+            quaerat, natus nisi asperiores amet.</p>
     </div>
     <div class="title-middle w-25">
         <div class="header-title fs-4 mb-2 font-weight-bolder">
-            About Us
+            Tentang Kami
         </div>
         <ul class="list-unstyled">
             <li>
                 <p>
-                Join us at AtoZ and discover the joy of thrifting while contributing to a more sustainable future.
-                Happy thrifting!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam dignissimos quasi
+                    nobis autem explicabo! Voluptas!
                 </p>
             </li>
             <li>
-                <p>Contact Us</p>
+                <p>091231231232</p>
             </li>
             <li>
-                +62 81936781515
+                p2312321312313
             </li>
         </ul>
     </div>
     <div class="title-sosmed w-30">
         <div class="header-title fs-4 mb-2 font-weight-bolder">
-            Social Media
+            Sosial Media
         </div>
         <div class="sosmed d-flex gap-3">
             <i class="fa-brands fa-instagram fa-2x"></i>
@@ -39,5 +39,5 @@
     </div>
 </div>
 <div class="text-center p-lg-4 mt-3">
-    Copyright @ AtoZ 2024</i>
+    Copy right @ StudyKuy 2023</i>
 </div>

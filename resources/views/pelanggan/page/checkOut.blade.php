@@ -53,10 +53,10 @@
                         <h3 class="mb-3">{{$codeTransaksi}}</h3>
                         <input type="hidden" name="code" value="{{$codeTransaksi}}">
                         <div class="row mb-3">
-                            <label for="totalBelanja" class="col-form-label col-sm-6">Total Belanja</label>
+                            <label for="totalBelanja" class="col-form-label col-sm-6">Rincian Belanja</label>
                             <div class="col-sm-6">
                                 <input type="number" class="form-control totalBelanja" id="totalBelanja"
-                                    name="totalBelanja" value="{{ $detailBelanja }}" readonly>
+                                    name="totalBelanja" value="{{ $detailBelanja }}" readonly >
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -64,10 +64,10 @@
                             <div class="col-sm-6">
                                 @if (Auth::user())
                                     <input type="number" class="form-control discount" id="discount" name="discount"
-                                        value="0">
+                                        value="0" >
                                 @else
                                     <input type="number" class="form-control discount" id="discount" name="discount"
-                                        value="0">
+                                        value="0" >
                                 @endif
 
                             </div>
@@ -75,7 +75,7 @@
                         <div class="row mb-3">
                             <label for="PPn" class="col-form-label col-sm-6">PPn</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control ppn" id="PPn" name="PPn" value="0">
+                                <input type="text" class="form-control ppn" id="PPn" name="PPn" value="0" >
                             </div>
                         </div>
                         <div class="row mb-3">
