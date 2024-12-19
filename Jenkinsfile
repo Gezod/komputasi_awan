@@ -8,14 +8,15 @@ pipeline {
                           userRemoteConfigs: [[url: 'https://github.com/Gezod/komputasi_awan.git']]])
             }
         }
-                stage('Sending Dockerfile to Ansible server') {
+                       stage('Sending Dockerfile to Ansible server') {
             steps {
                 echo 'Sending Dockerfile to Ansible server...'
                 bat '''
-                pscp Dockerfile user@54.79.72.164:/path/to/destination
+                scp Dockerfile user@54.79.72.164:/path/to/destination
                 '''
             }
         }
+
         stage('Docker build image') {
             steps {
                 echo 'Building Docker image...'
