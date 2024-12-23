@@ -1,62 +1,51 @@
 pipeline {
-    agent any
+    agent any  // Menentukan agen untuk menjalankan pipeline, bisa diubah sesuai kebutuhan
+    environment {
+        DOCKER_IMAGE = "atoz_fix"  // Nama image Docker yang akan dibangun
+        DOCKER_REGISTRY = 'docker.io' // Menentukan registry Docker
+        DOCKER_REPO = 'angga0806/atoz_fix' // Menentukan nama repository Docker
+        DOCKER_CREDENTIALS = 'angga0806' // ID kredensial di Jenkins untuk login ke Docker registry
+    }
+
     stages {
-        stage('Git checkout') {
+        stage('Git Checkout') {
             steps {
-                echo 'Cloning repository from GitHub...'
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']],
-                          userRemoteConfigs: [[url: 'https://github.com/Gezod/komputasi_awan.git']]])
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/Gezod/komputasi_awan'
             }
-        }
-                       stage('Sending Dockerfile to Ansible server') {
-            steps {
-                echo 'Sending Dockerfile to Ansible server...'
-                bat '''
-                scp Dockerfile user@54.79.72.164:/path/to/destination
-                '''
-            }
+
         }
 
-        stage('Docker build image') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
-                bat 'docker build -t atoz_fix .'
-            }
-        }
-        stage('Push Docker images to DockerHub') {
-            steps {
-                echo 'Pushing Docker image to DockerHub...'
-                withDockerRegistry([credentialsId: 'dockerhub-credentials', url: '']) {
-                    bat 'docker push angga0806/atoz_fix'
+                script {
+                    // Menjalankan perintah Docker build dengan nama image 'atoz_fix'
+                    docker.build("atoz_fix", ".")
                 }
             }
         }
-        stage('Copy files to Kubernetes server') {
+
+        stage('Push Docker Image') {
             steps {
-                echo 'Copying files to Kubernetes server...'
-                bat '''
-                scp -r ./files user@kubernetes-server:/path/to/destination
-                '''
+                script {
+                    // Login ke Docker registry dan push image ke repository
+                   docker.withRegistry('', 'angga0806') {
+                        docker.image("${DOCKER_REPO}:latest").push()
+                    }
+                }
             }
         }
-        stage('Kubernetes deployment using Ansible') {
+
+        stage('Maven Build with Docker') {
             steps {
-                echo 'Deploying to Kubernetes using Ansible...'
-                bat '''
-                ansible-playbook -i inventory.yml deploy.yml
-                '''
+                script {
+                    // Mengonversi path Windows ke format Unix untuk digunakan Docker
+                    def workspaceUnix = "${env.WORKSPACE}".replace('\\', '/').replaceAll('C:', '/mnt/c')
+                    docker.image('maven:3.8.5-openjdk-11').inside("--workdir ${workspaceUnix}") {
+                        sh 'mvn clean install -DskipTests'
+                    }
+                }
             }
         }
     }
-    post {
-        always {
-            echo 'Pipeline execution finished.'
-        }
-        success {
-            echo 'Pipeline completed successfully.'
-        }
-        failure {
-            echo 'Pipeline failed.'
-        }
-    }
+    
 }
