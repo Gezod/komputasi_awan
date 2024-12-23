@@ -5,7 +5,7 @@
   tasks:
     - name: Copy Dockerfile from local machine to remote server
       copy:
-        src: D:/cloud/cloud_thrift/Dockerfile
+        src: Dockerfile
         dest: /home/ec2-user/Dockerfile
 
     - name: Ensure Jenkins service is started
